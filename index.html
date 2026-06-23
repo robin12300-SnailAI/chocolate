@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colin Furphy 推广视频策划方案 V2 · 升级版</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 50px 60px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+  .v2-badge {
+    display: inline-block; background: linear-gradient(135deg, #007aff, #af52de); color: #fff;
+    padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.8px;
+    margin-bottom: 12px; text-transform: uppercase;
+  }
+  h1 { font-size: 30px; font-weight: 700; margin-bottom: 8px; color: #1d1d1f; }
+  .subtitle { color: #6e6e73; font-size: 15px; margin-bottom: 10px; }
+  .update-note { background: #e8f9ee; border-left: 4px solid #34c759; padding: 14px 18px; border-radius: 8px; margin-bottom: 24px; font-size: 14px; }
+  .update-note strong { color: #34c759; }
+
+  h2 { font-size: 22px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 2px solid #007aff; color: #1d1d1f; }
+  h3 { font-size: 18px; font-weight: 600; margin: 20px 0 10px; color: #007aff; }
+  h4 { font-size: 15px; font-weight: 600; margin: 14px 0 8px; color: #1d1d1f; }
+  p { margin-bottom: 10px; color: #424245; font-size: 15px; }
+
+  .meta-box { background: #f5f5f7; border-radius: 12px; padding: 18px 22px; margin: 16px 0; }
+  .meta-row { display: flex; padding: 5px 0; font-size: 14px; }
+  .meta-label { font-weight: 600; width: 110px; color: #6e6e73; flex-shrink: 0; }
+  .meta-value { color: #1d1d1f; }
+
+  .quote-box { background: #007aff; color: #fff; padding: 16px 20px; border-radius: 10px; margin: 12px 0; font-style: italic; font-weight: 500; font-size: 16px; }
+  .quote-box .quote-sub { font-size: 13px; opacity: 0.85; display: block; margin-top: 4px; }
+  .highlight-box { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border-left: 4px solid #ff9500; padding: 14px 18px; border-radius: 8px; margin: 12px 0; font-size: 14px; }
+
+  /* 时间轴 */
+  .timeline { position: relative; padding-left: 28px; margin: 16px 0; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #007aff, #af52de); }
+  .tl-item { position: relative; padding-bottom: 16px; }
+  .tl-item::before { content: ''; position: absolute; left: -23px; top: 5px; width: 11px; height: 11px; background: #fff; border: 3px solid #007aff; border-radius: 50%; box-shadow: 0 0 0 2px #007aff; }
+  .tl-time { font-weight: 700; color: #007aff; font-size: 13px; }
+  .tl-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
+  .tag-red { background: #ffeaea; color: #ff3b30; }
+  .tag-orange { background: #fff3e0; color: #ff9500; }
+  .tag-green { background: #e8f9ee; color: #34c759; }
+  .tag-purple { background: #f3e8ff; color: #af52de; }
+  .tag-blue { background: #e8f2ff; color: #007aff; }
+
+  .tags { margin: 12px 0; }
+  .tag { display: inline-block; background: #e8f2ff; color: #007aff; padding: 4px 12px; border-radius: 14px; font-size: 13px; margin: 3px 5px 3px 0; font-weight: 500; }
+  .tag.r { background: #ffeaea; color: #ff3b30; }
+  .tag.o { background: #fff3e0; color: #ff9500; }
+  .tag.g { background: #e8f9ee; color: #34c759; }
+  .tag.p { background: #f3e8ff; color: #af52de; }
+
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
+  th { background: #1d1d1f; color: #fff; padding: 10px 12px; text-align: left; font-weight: 600; }
+  td { padding: 10px 12px; border-bottom: 1px solid #e5e5e7; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+
+  .video-card { background: linear-gradient(135deg, #fafafa, #f5f5fa); border: 1px solid #e5e5e7; border-radius: 14px; padding: 26px; margin: 20px 0; }
+  .video-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #e5e5e7; }
+  .vnum { width: 42px; height: 42px; background: linear-gradient(135deg, #007aff, #5856d6); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0; }
+  .vnum.new { background: linear-gradient(135deg, #ff9500, #ff6b00); }
+  .vtitle { font-size: 18px; font-weight: 700; color: #1d1d1f; }
+  .vsub { font-size: 12px; color: #6e6e73; margin-top: 2px; }
+  .v-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+
+  .scene-table th { background: linear-gradient(135deg, #007aff, #5856d6); }
+  .stime { font-weight: 700; color: #007aff; white-space: nowrap; font-size: 13px; }
+  .stxt { font-family: "SF Mono", Menlo, monospace; background: #fff; padding: 6px 9px; border-radius: 4px; border: 1px solid #e5e5e7; font-size: 12px; line-height: 1.5; }
+  .hook { background: #fff3e0; border-left: 3px solid #ff9500; padding: 9px 13px; margin: 8px 0; border-radius: 4px; font-style: italic; font-size: 14px; }
+  .cta { background: #e8f9ee; border-left: 3px solid #34c759; padding: 9px 13px; margin: 8px 0; border-radius: 4px; font-weight: 600; font-size: 14px; }
+  .pub-box { background: #f5f5f7; border-radius: 8px; padding: 13px 16px; margin-top: 14px; }
+  .pub-box h5 { font-size: 12px; color: #6e6e73; margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .pub-box p { font-size: 13px; margin-bottom: 5px; }
+
+  .photo-ref { background: #f0f0f5; border-radius: 10px; padding: 16px 20px; margin: 16px 0; }
+  .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
+  .photo-item { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 12px; font-size: 13px; }
+  .photo-item strong { color: #007aff; display: block; margin-bottom: 4px; }
+  .photo-item span { color: #6e6e73; font-size: 12px; }
+
+  .toc { background: linear-gradient(135deg, #f5f5f7, #ebebf0); border-radius: 12px; padding: 18px 24px; margin: 20px 0; }
+  .toc h3 { margin-top: 0; color: #1d1d1f; font-size: 16px; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { padding: 5px 0; font-size: 14px; }
+  .toc a { color: #007aff; text-decoration: none; font-weight: 500; }
+
+  .compare-table { border: 2px solid #007aff; border-radius: 10px; overflow: hidden; margin: 16px 0; }
+  .compare-table thead th { background: linear-gradient(135deg, #007aff, #5856d6); }
+  .compare-table td:first-child { font-weight: 600; background: #f5f5f7; }
+
+  .footer { margin-top: 44px; padding-top: 20px; border-top: 1px solid #e5e5e7; text-align: center; color: #6e6e73; font-size: 12px; }
+
+  @media (max-width: 768px) {
+    .container { padding: 28px 18px; }
+    h1 { font-size: 24px; }
+    h2 { font-size: 19px; }
+    .meta-label { width: 90px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<span class="v2-badge">V2 · 升级版</span>
+<h1>Colin Furphy 推广视频策划方案</h1>
+<p class="subtitle">基于源视频 + Epilepsy Queensland 深度报道 · 面向 YouTube Shorts & Facebook · 7 条推广视频脚本与分镜</p>
+
+<div class="update-note">
+  <strong>V1 → V2 核心升级：</strong>
+  ① 姓名更正为 <strong>Colin Furphy</strong>（非 Fury）② 新增完整人生时间线（6岁→17岁→25岁→登顶）③ 新增<strong>矿工撞墙事件</strong>、<strong>$32,000筹款</strong>、<strong>46公斤减重</strong>等独家故事 ④ 新增<strong>2条全新视频脚本</strong>（矿工故事 + 目标清单）⑤ 新增<strong>真实照片素材库</strong>供剪辑参考 ⑥ 所有脚本基于双重来源交叉验证
+</div>
+
+<div class="toc">
+  <h3>目录导航</h3>
+  <ul>
+    <li><a href="#sources">一、信息来源与更正说明</a></li>
+    <li><a href="#profile">二、人物完整档案（V2升级）</a></li>
+    <li><a href="#timeline">三、完整人生时间轴</a></li>
+    <li><a href="#quotes">四、核心金句库</a></li>
+    <li><a href="#photos">五、可用照片素材</a></li>
+    <li><a href="#strategy">六、V2推广视频矩阵（7条）</a></li>
+    <li><a href="#v1">视频 1-5（V1优化升级版）</a></li>
+    <li><a href="#v6">视频 6（NEW）— 凌晨2点的混凝土墙</a></li>
+    <li><a href="#v7">视频 7（NEW）— 目标清单法则</a></li>
+    <li><a href="#publish">七、发布执行方案</a></li>
+  </ul>
+</div>
+
+<!-- ====== 一、来源 ====== -->
+<h2 id="sources">一、信息来源与更正说明</h2>
+<table>
+  <thead><tr><th>来源</th><th>类型</th><th>内容</th><th>价值</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>YouTube 视频</td>
+      <td>视频演讲</td>
+      <td>Colin 在台上的演讲实录（181秒），含现场见证者评价</td>
+      <td>演讲风格、语气、观众反应、方法论原话</td>
+    </tr>
+    <tr>
+      <td>Epilepsy Queensland 杂志</td>
+      <td>深度报道<br>Issue 2 / 2018</td>
+      <td>"Gateway to an adventurous new life"<br>Kayla Zonneveld 撰写</td>
+      <td>完整传记、精确时间线、数据、照片</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlight-box">
+  <p><strong>⚠️ 关键更正</strong>：视频自动字幕将姓氏识别为 "Fury"，杂志原文确认为 <strong>Furphy</strong>。后续所有物料统一使用 <strong>Colin Furphy</strong>。</p>
+  <p style="margin-top:6px"><strong>⚠️ 手术时间更正</strong>：视频中提到的"激光脑部手术"对应的是杂志中记录的 <strong>2009年第二次手术（25岁）</strong>，非首次手术。第一次手术在 17 岁。</p>
+</div>
+
+<!-- ====== 二、人物档案 ====== -->
+<h2 id="profile">二、人物完整档案（V2升级）</h2>
+<div class="meta-box">
+  <div class="meta-row"><div class="meta-label">全名</div><div class="meta-value"><strong>Colin Furphy</strong></div></div>
+  <div class="meta-row"><div class="meta-label">身份标签</div><div class="meta-value">励志演讲家 · 乞力马扎罗登顶者 · 双次脑部手术幸存者 · 癫痫症倡导者 · Alice Springs 前旅行导游</div></div>
+  <div class="meta-row"><div class="meta-label">出生地/居住地</div><div class="meta-value">澳大利亚 · 曾居住 NSW / QLD / NT (Alice Springs)</div></div>
+  <div class="meta-row"><div class="meta-label">确诊年龄</div><div class="meta-value">6 岁（偏头痛误诊后确认癫痫）</div></div>
+  <div class="meta-row"><div class="meta-label">手术次数</div><div class="meta-value">2 次（17岁首次 / 25岁二次激光手术）</div></div>
+  <div class="meta-row"><div class="meta-label">登顶日期</div><div class="meta-value">2012 年 2 月 29 日（ leap day ）</div></div>
+  <div class="meta-row"><div class="meta-label">社会贡献</div><div class="meta-value">为 Alice Springs Hospital 儿童病房筹款 $32,000 AUD</div></div>
+  <div class="meta-row"><div class="meta-label">个人成就</div><div class="meta-value">减重 46 公斤 · 完成澳洲每个州生活工作目标 · 18个州/岛国经历</div></div>
+  <div class="meta-row"><div class="meta-label">最高用药量</div><div class="meta-value">32 片药 × 每天 2 次 = 64 片/天</div></div>
+</div>
+
+<div class="tags">
+  <span class="tag r">双次脑部手术</span>
+  <span class="tag o">60 seizures/week</span>
+  <span class="tag g">Kilimanjaro Summit</span>
+  <span class="tag">Epilepsy Advocate</span>
+  <span class="tag p">$32K Fundraiser</span>
+  <span class="tag r">撞穿混凝土墙</span>
+  <span class="tag o">46kg Weight Loss</span>
+  <span class="tag g">Goal Chart Method</span>
+  <span class="tag p">Alice Springs Guide</span>
+  <span class="tag">Australian</span>
+  <span class="tag">Motivational Speaker</span>
+</div>
+
+<h3>他人评价（双重来源）</h3>
+<div class="highlight-box">
+  <p><strong>来自视频现场观众：</strong></p>
+  <p>"I just saw Colin Furphy on stage and he was a phenomenal speaker."</p>
+  <p>"He's got a strong sense of responsibility and a big heart. Colin's in it for the best of you."</p>
+  <p style="margin-top:10px"><strong>来自 Epilepsy Queensland 报道：</strong></p>
+  <p>"People around him were extremely supportive... They didn't make a big deal about it. I wasn't ostracised or made to feel awkward."</p>
+  <p>"It was really touching and it helped with the recovery." — 矿工同事开车两小时去医院陪护</p>
+</div>
+
+<!-- ====== 三、时间轴 ====== -->
+<h2 id="timeline">三、完整人生时间轴</h2>
+<div class="timeline">
+  <div class="tl-item">
+    <div class="tl-time">~6 岁 <span class="tl-tag tag-red">确诊</span></div>
+    <p>长期偏头痛后确诊癫痫（tonic clonic seizures）。开始服药。父母最初不信，坚持求医确认诊断。周围人非常支持，学校环境鼓励，没有被排挤或异样眼光。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">青少年期 <span class="tl-tag tag-orange">挑战加剧</span></div>
+    <p>癫痫开始严重影响生活方式。无法工作、无法驾驶。<strong>最多时服用 32 片 × 每天 2 次 = 64 片/天。</strong>首次讨论手术选项。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">~17 岁（约2001年）<span class="tl-tag tag-purple">第一次手术</span></div>
+    <p>经过漫长测试和审批流程，完成首次脑部手术。术后恢复期需与父母同住，感到失去独立性。术后曾经历抑郁，通过画画和日记表达情绪。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">18-25 岁 <span class="tl-tag tag-blue">探索期</span></div>
+    <p><strong>设定宏大目标：在 18-30 岁期间，在澳大利亚每个州生活和工作。</strong>逐一实现：NSW 酒店管理 → Whitsunday Islands 一季 → Northbrook Island (South Pacific) 一年 → Central QLD 矿山工作一年半。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">矿山时期 <span class="tl-tag tag-red">危机时刻 ⭐</span></div>
+    <p>中昆士兰矿区，独自上夜班。凌晨约 2 点，发生有生以来最大的一次癫痫发作。<strong>猛烈到撞穿了混凝土墙壁的一个洞，但奇迹般没有头部受伤。</strong>同事下班后驱车 2 小时去医院陪护他。"真的很感人，这对康复帮助很大。"术后约 6 个月癫痫复发，持续 3 年。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">2009 年（25岁）<span class="tl-tag tag-purple">第二次手术 ⭐</span></div>
+    <p>医生认为成功率低（"only a small chance that it would change anything"），觉得他有点疯狂。但 Colin 有太多目标要实现，坚持要做。<strong>这次是新技术：先全麻，然后转为局部麻醉，手术过程中需要说话配合。</strong>术后再次搬回父母家恢复。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">术后恢复期 → Alice Springs</div>
+    <p>康复后决定继续旅行的热情。搬到 Alice Springs 成为旅行导游。<strong>"Moving to Alice Springs was the best decision I ever made."</strong> 设立 Goal Chart 目标清单：停药、环游世界、交朋友、减重 46 公斤、爬乞力马扎罗。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">术前宣告 <span class="tl-tag tag-orange">关键时刻</span></div>
+    <p>第二次手术前告诉医生：<strong>"I would climb Mount Kilimanjaro."</strong> 医生觉得可爱又好笑。周围人说"你做不到"，反而让他更加坚定："I'm going to prove you wrong."</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">训练期（6个月-1年）<span class="tl-tag tag-green">蜕变</span></div>
+    <p>6 个月训练后能跑 10km/天。持续训练一年后减重 <strong>46 公斤</strong>。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">2012-02-29 <span class="tl-tag tag-green">登顶 ⭐⭐⭐</span></div>
+    <p>登上非洲之巅 Mount Kilimanjaro Uhuru Peak。团队命名"Bitty the Kookaburra Dollars"，通过社区赞助为 Alice Springs Hospital 儿童病房购买新麻醉机筹款 <strong>$32,000 AUD</strong>。媒体报道广泛。</p>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">现在 <span class="tl-tag tag-blue">使命</span></div>
+    <p>成为励志演讲家，帮助人们克服自我怀疑。分享自己的经验："Learn how to listen, focus on beating your own goals, learn to learn and never give up."<br>"If you can get through epilepsy, you can get through anything important."</p>
+  </div>
+</div>
+
+<!-- ====== 四、金句库 ====== -->
+<h2 id="quotes">四、核心金句库</h2>
+
+<div class="quote-box">
+  "Your Dreams Are Achievable."
+  <span class="quote-sub">— 你的梦想是可以实现的</span>
+</div>
+
+<div class="quote-box">
+  "Your thoughts become your reality."
+  <span class="quote-sub">— 你的想法会成为你的现实</span>
+</div>
+
+<div class="quote-box">
+  "You can do what you want to do. You just need to put trust in yourself and swallow your pride to ask someone else for help."
+  <span class="quote-sub">— 你能做你想做的事。只需相信自己，放下骄傲向他人求助</span>
+</div>
+
+<div class="quote-box" style="background:#ff9500;">
+  "If you can get through epilepsy, you can get through anything important."
+  <span class="quote-sub">— 如果你连癫痫都能挺过去，你就能挺过任何重要的事</span>
+</div>
+
+<div class="quote-box">
+  "Learn how to listen, focus on beating your own goals, learn to learn and never give up."
+  <span class="quote-sub">— 学会倾听，专注超越自己的目标，学会学习，永不放弃</span>
+</div>
+
+<div class="quote-box" style="background:linear-gradient(135deg,#ff3b30,#ff9500);">
+  "The most challenging part of climbing the mountain is the barriers that you put up in your own mind and not having the confidence in yourself."
+  <span class="quote-sub">— 攀登最难的不是山，是你自己心里的障碍和不自信</span>
+</div>
+
+<div class="highlight-box">
+  <p><strong>📐 方法论一：问题除以 10 法则</strong></p>
+  <p>遇到大问题 ÷10 → 再 ÷10。如果还是问题就去处理；如果不是了，那才是它本来的大小。</p>
+</div>
+<div class="highlight-box">
+  <p><strong>📋 方法论二：Goal Chart 目标清单法</strong></p>
+  <p>写下所有目标（停药、旅行、交友、减重、登山……），逐个攻克，按自己节奏推进。</p>
+</div>
+
+<!-- ====== 五、照片素材 ====== -->
+<h2 id="photos">五、可用照片素材（来源：Epilepsy Queensland 杂志）</h2>
+<div class="photo-ref">
+  <h4>已确认可用的视觉素材</h4>
+  <div class="photo-grid">
+    <div class="photo-item">
+      <strong>📷 头部手术疤痕特写</strong>
+      <span>侧脸照，清晰可见从额头延伸至耳后的手术疤痕 — 极具视觉冲击力</span>
+    </div>
+    <div class="photo-item">
+      <strong>📷 Uhuru Peak 团队合影</strong>
+      <span>乞力马扎罗山顶 Uhuru Peak 标志牌前，全队庆祝合影，多人举手欢呼</span>
+    </div>
+    <div class="photo-item">
+      <strong>📷 山顶雪山个人照</strong>
+      <span>Colin 在雪山顶的剪影/侧影，背景云海雪山</span>
+    </div>
+    <div class="photo-item">
+      <strong>📷 年轻时期照片</strong>
+      <span>少年时期的 Colin，穿着格子衬衫，面带微笑 — 对比今昔极强</span>
+    </div>
+    <div class="photo-item">
+      <strong>📷 日落/黄昏剪影</strong>
+      <span>一个人站在岩石/悬崖上的黄昏剪影 — 可用于情绪转场</span>
+    </div>
+    <div class="photo-item">
+      <strong>📷 Epilepsy Qld 活动照</strong>
+      <span>与 Epilepsy Queensland 团队的紫色主题合影 — 公益背书</span>
+    </div>
+  </div>
+  <p style="margin-top:12px;font-size:13px;color:#6e6e73;">💡 以上图片均出自 <em>Epilepsy Queensland Issue 2, 2018</em> 杂志内页扫描件（用户提供的 IMG_0052.png 和 IMG_0053.png）。建议联系 Epilepsy Queensland 获取高清原图用于正式发布。</p>
+</div>
+
+<!-- ====== 六、矩阵策略 ====== -->
+<h2 id="strategy">六、V2推广视频矩阵（7条）</h2>
+<p>V1 版 5 条保留并优化，新增 2 条基于新发现的强故事线：</p>
+
+<table class="compare-table">
+  <thead>
+    <tr><th>#</th><th>视频主题</th><th>类型</th><th>时长</th><th>平台</th><th>状态</th><th>核心钩子</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>从64片药到登顶乞力马扎罗</td><td>故事切片</td><td>45s</td><td>YT Shorts + FB</td><td>V1升级</td><td>数字反差 64→0</td></tr>
+    <tr><td>2</td><td>Your Dreams Are Achievable</td><td>金句卡</td><td>20s</td><td>YT Shorts</td><td>V1升级</td><td>医生说别做，他做了</td></tr>
+    <tr><td>3</td><td>把问题除以 10</td><td>方法论</td><td>30s</td><td>YT Shorts + FB</td><td>V1升级</td><td>反常识解题法</td></tr>
+    <tr><td>4</td><td>谁是 Colin Furphy</td><td>人物介绍</td><td>60s</td><td>FB 信息流</td><td>V1升级</td><td>五重身份反差</td></tr>
+    <tr><td>5</td><td>你的想法成为现实</td><td>心态篇</td><td>25s</td><td>YT Shorts</td><td>V1升级</td><td>焦虑从哪来</td></tr>
+    <tr style="background:#fff8e1;"><td><strong>6 🆕</strong></td><td><strong>凌晨2点，他撞穿了混凝土墙</strong></td><td><strong>高燃叙事</strong></td><td><strong>45s</strong></td><td><strong>YT Shorts + FB</strong></td><td><strong>NEW</strong></td><td><strong>物理冲击力</strong></td></tr>
+    <tr style="background:#fff8e1;"><td><strong>7 🆕</strong></td><td><strong>一张纸改变了他的命运</strong></td><td><strong>实用方法</strong></td><td><strong>35s</strong></td><td><strong>YT Shorts</strong></td><td><strong>NEW</strong></td><td><strong>Goal Chart 可复制</strong></td></tr>
+  </tbody>
+</table>
+
+<h3>V2 发布节奏（10 天周期）</h3>
+<table>
+  <thead><tr><th>天</th><th>动作</th><th>目的</th></tr></thead>
+  <tbody>
+    <tr><td>Day 1</td><td>视频 6（撞墙故事）</td><td>最强钩子引爆流量</td></tr>
+    <tr><td>Day 2</td><td>视频 1（64片药→山顶）</td><td>承接好奇，展开全貌</td></tr>
+    <tr><td>Day 3</td><td>视频 4（人物介绍 V2）</td><td>建立深度信任</td></tr>
+    <tr><td>Day 5</td><td>视频 7（目标清单）</td><td>输出可复制方法</td></tr>
+    <tr><td>Day 6</td><td>视频 2（金句卡）</td><td>短平快传播</td></tr>
+    <tr><td>Day 8</td><td>视频 3（÷10 法则）+ 视频 5（心态篇）</td><td>方法论收尾</td></tr>
+    <tr><td>Day 10</td><td>视频 6 重投（不同剪辑版）</td><td>二次触达转化</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ========== 视频 1 (V2升级) ========== -->
+<div class="video-card" id="v1">
+  <div class="video-header">
+    <div class="vnum">1</div>
+    <div>
+      <div class="vtitle">从 64 片药到登顶乞力马扎罗</div>
+      <div class="vsub">故事切片 · 45 秒 · YouTube Shorts + Facebook 【V2升级】</div>
+    </div>
+  </div>
+  <div class="v-meta">
+    <span class="tag r">强情绪</span>
+    <span class="tag o">数字反差</span>
+    <span class="tag g">励志</span>
+    <span class="tag p">V2增强</span>
+  </div>
+
+  <h4>脚本（V2升级 — 加入药物数量细节）</h4>
+  <div class="hook">🎬 钩子（0-3s）："每天 64 片药。然后他登上了非洲最高峰。"</div>
+  <p><strong>主体（3-38s）：</strong>"Colin Furphy 从 6 岁起就和癫痫共处。最多的时候他每天吃 64 片药 — 32 片两次。他失去了开车的能力，失去了工作。25 岁，医生告诉他第二次脑部手术成功率很低。他说：'我还是要爬乞力马扎罗。' 医生觉得他疯了。他训练了一年，减掉了 46 公斤。2012 年 2 月 29 日，他站在了山顶，还帮医院筹了 32,000 澳元。"</p>
+  <div class="cta">🎯 CTA（38-45s）："如果你连癫痫都能挺过去，你就能挺过任何事。关注 Colin Furphy。"</div>
+
+  <h4>分镜表（V2升级）</h4>
+  <table class="scene-table">
+    <thead><tr><th>时间</th><th>画面</th><th>字幕</th><th>音效/BGM</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="stime">0-3s</td>
+        <td>黑屏白字"64 PILLS A DAY"快速跳动 → 切 Uhuru Peak 合影（杂志图）</td>
+        <td class="stxt">64 pills a day. Then he climbed Africa's highest peak.</td>
+        <td>心跳声 + 低沉鼓点进入</td>
+      </tr>
+      <tr>
+        <td class="stime">3-10s</td>
+        <td>药瓶堆叠动画 → 年轻 Colin 照片（格子衬衫）→ 手术疤痕照闪切</td>
+        <td class="stxt">Diagnosed at age 6. 32 tablets, twice a day. Two brain surgeries.</td>
+        <td>BGM 转低沉，药瓶碰撞声</td>
+      </tr>
+      <tr>
+        <td class="stime">10-20s</td>
+        <td>医生摇头嘴型（源视频）→ Colin 眼神坚定 → "Kilimanjaro"手写体浮现</td>
+        <td class="stxt">Doctor: "Only a small chance it would help." / Colin: "I'm climbing Kilimanjaro."</td>
+        <td>BGM 缓慢上扬</td>
+      </tr>
+      <tr>
+        <td class="stime">20-30s</td>
+        <td>训练蒙太奇：跑步 → 称体重数字递减 → "46KG LOST"大字</td>
+        <td class="stxt">One year of training. 46 kilos lost.</td>
+        <td>跑步呼吸声 + BGM 加速</td>
+      </tr>
+      <tr>
+        <td class="stime">30-38s</td>
+        <td>Uhuru Peak 标志牌合影（杂志高清）→ "$32,000 RAISED"浮字 → 儿童病房意象</td>
+        <td class="stxt">Feb 29, 2012. Summit. Raised $32,000 for children's hospital.</td>
+        <td>BGM 高潮爆发</td>
+      </tr>
+      <tr>
+        <td class="stime">38-45s</td>
+        <td>黑屏橙底白字金句 → Colin 名字</td>
+        <td class="stxt">IF YOU CAN GET THROUGH EPILEPSY, YOU CAN GET THROUGH ANYTHING.<br>Follow Colin Furphy.</td>
+        <td>BGM 收尾钢琴</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pub-box">
+    <h5>发布配置</h5>
+    <p><strong>标题：</strong>64 pills a day → summit of Kilimanjaro. This man's story will change your perspective. 🧠🏔️</p>
+    <p><strong>标签：</strong>#colinfurphy #epilepsysurvivor #kilimanjaro #motivation #neversurrender #brain surgery #inspiration #australia</p>
+    <p><strong>封面文案：</strong>64 pills → 1 summit</p>
+    <p><strong>封面画面：</strong>左：药瓶散落暗色场景；右：Uhuru Peak 团队合影明亮画面</p>
+  </div>
+</div>
+
+<!-- ========== 视频 2 (V2升级) ========== -->
+<div class="video-card" id="v2">
+  <div class="video-header">
+    <div class="vnum">2</div>
+    <div>
+      <div class="vtitle">Your Dreams Are Achievable</div>
+      <div class="vsub">金句卡 · 20 秒 · YouTube Shorts 【V2升级】</div>
+    </div>
+  </div>
+  <div class="v-meta">
+    <span class="tag p">金句</span>
+    <span class="tag o">高传播</span>
+    <span class="tag g">正能量</span>
+  </div>
+  <h4>脚本（V2 — 微调）</h4>
+  <div class="hook">🎬 钩子（0-3s）："医生说成功率很低。他还是做了。"</div>
+  <p><strong>主体（3-15s）：</strong>静默 1 秒 → 白字"He did it." → 登顶合影慢放大 → "2012.02.29. Uhuru Peak."</p>
+  <div class="cta">🎯 CTA（15-20s）："YOUR DREAMS ARE ACHIEVABLE."</div>
+
+  <h4>分镜表</h4>
+  <table class="scene-table">
+    <thead><tr><th>时间</th><th>画面</th><th>字幕</th><th>音效</th></tr></thead>
+    <tbody>
+      <tr><td class="stime">0-3s</td><td>纯黑底红字 "LOW CHANCE OF SUCCESS"</td><td class="stxt">Doctors said: low chance it would change anything.</td><td>低频嗡鸣</td></tr>
+      <tr><td class="stime">3-5s</td><td>1秒静默 → 白字 "HE DID IT ANYWAY."</td><td class="stxt">He did it anyway.</td><td>单声钢琴</td></tr>
+      <tr><td class="stime">5-14s</td><td>Uhuru Peak 团队合影缓慢推进（使用杂志照片）→ 金色粒子效果</td><td class="stxt">February 29, 2012. Uhuru Peak, 5,895m. Colin Furphy.</td><td>史诗 BGM 渐入渐强</td></tr>
+      <tr><td class="stime">14-20s</td><td>定格 → 大字 "YOUR DREAMS ARE ACHIEVABLE" 逐词浮现</td><td class="stxt">YOUR DREAMS ARE ACHIEVABLE.</td><td>BGM 收尾回响</td></tr>
+    </tbody>
+  </table>
+  <div class="pub-box">
+    <h5>发布配置</h5>
+    <p><strong>标题：</strong>"Low chance," said the doctors. He climbed Mt Kilimanjaro anyway. 🏔️✨</p>
+    <p><strong>标签：</strong>#dreams #shorts #motivation #kilimanjaro #colinfurphy #inspirational</p>
+  </div>
+</div>
+
+<!-- ========== 视频 3 ========== -->
+<div class="video-card">
+  <div class="video-header"><div class="vnum">3</div><div><div class="vtitle">把问题除以 10</div><div class="vsub">方法论 · 30 秒 · YouTube Shorts + Facebook 【V2微调】</div></div></div>
+  <div class="v-meta"><span class="tag p">实用</span><span class="tag">方法论</span><span class="tag g">可分享</span></div>
+  <h4>脚本（同 V1，略）</h4>
+  <div class="hook">🎬 钩子（0-3s）："问题太大？把它除以 10。再除以 10。"</div>
+  <p><strong>主体（3-25s）：</strong>Colin Furphy 的法则：问题 ÷10 ÷10。如果还是问题就处理，不是了那就是它的真实大小。</p>
+  <div class="cta">🎯 CTA（25-30s）："下次焦虑试试这个。收藏。"</div>
+  <div class="pub-box">
+    <h5>发布配置</h5>
+    <p><strong>标题：</strong>The ÷10 rule that shrinks any problem. 🧠✨ #mindset #anxietytips</p>
+  </div>
+</div>
+
+<!-- ========== 视频 4 (V2大幅升级) ========== -->
+<div class="video-card" id="v4">
+  <div class="video-header">
+    <div class="vnum">4</div>
+    <div>
+      <div class="vtitle">谁是 Colin Furphy</div>
+      <div class="vsub">人物介绍 · 60 秒 · Facebook 信息流 【V2大幅升级】</div>
+    </div>
+  </div>
+  <div class="v-meta">
+    <span class="tag r">人设建立</span>
+    <span class="tag o">五重身份</span>
+    <span class="tag g">公益背书</span>
+    <span class="tag p">V2重构</span>
+  </div>
+
+  <h4>脚本（V2重构 — 加入 $32K筹款 + 双次手术 + 减重）</h4>
+  <div class="hook">🎬 钩子（0-4s）："他是吃 64 片药的病人。他是撞穿过混凝土墙的矿工。他是登上非洲之巅的登山者。他是为孩子们筹了 3 万2 的慈善家。"</div>
+  <p><strong>主体（4-50s）：</strong>"Colin Furphy，6 岁确诊癫痫。17 岁第一次脑部手术。25 岁第二次，医生说成功率低，他还是做了。在矿山夜班，一次发作让他撞穿了墙壁。同事开车两小时去医院陪他。他没有放弃 — 训练一年减掉 46 公斤，2012 年 2 月 29 日登上乞力马扎罗，为儿童病房筹款 $32,000。今天他站在台上告诉每个人：如果你连癫痫都能挺过去，你就能挺过任何事。他的方法很简单 — 把问题除以 10，或者写下一张目标清单，逐个去赢。"</p>
+  <div class="cta">🎯 CTA（50-60s）："想认识一个把不可能变成日常的人？关注 Colin Furphy。"</div>
+
+  <h4>分镜表（V2重构）</h4>
+  <table class="scene-table">
+    <thead><tr><th>时间</th><th>画面</th><th>字幕</th><th>音效</th></tr></thead>
+    <tbody>
+      <tr><td class="stime">0-4s</td><td>四联画快切：药瓶 / 混凝土墙面裂纹 / Uhuru Peak / $32,000支票意象</td><td class="stxt">Patient. Miner who smashed through concrete. Climber. Fundraiser.</td><td>四声鼓点</td></tr>
+      <tr><td class="stime">4-15s</td><td>少年 Colin 照片 → 手术疤痕照 → 数字"6yo""17yo""25yo"依次出现</td><td class="stxt">Diagnosed age 6. Surgery at 17. Second surgery at 25.</td><td>钢琴 BGM</td></tr>
+      <tr><td class="stime">15-26s</td><td>矿井黑暗场景 → 混凝土墙破洞特写 → 同事开车夜间公路</td><td class="stxt">Working alone at 2am. Seizure so powerful he smashed through concrete wall. Coworkers drove 2hrs to be there.</td><td>BGM 转紧张→温暖</td></tr>
+      <tr><td class="stime">26-40s</td><td>训练 → 46kg 减重数字 → Uhuru Peak 合影 → "$32,000"金色大字</td><td class="stxt">Lost 46 kilos. Reached the summit. Raised $32,000 for kids.</td><td>BGM 高潮</td></tr>
+      <tr><td class="stime">40-50s</td><td>演讲台上 Colin → 观众点头 → 金句叠加</td><td class="stxt">"If you can get through epilepsy, you can get through anything."</td><td>BGM 温暖</td></tr>
+      <tr><td class="stime">50-60s</td><td>Colin 直视镜头微笑 → 名字 + 关注引导</td><td class="stxt">Follow Colin Furphy. Your dreams are achievable.</td><td>BGM 收尾</td></tr>
+    </tbody>
+  </table>
+  <div class="pub-box">
+    <h5>发布配置</h5>
+    <p><strong>标题：</strong>64 pills. A concrete wall. A mountain summit. $32,000 for kids. Meet Colin Furphy.</p>
+    <p><strong>标签：</strong>#colinfurphy #inspiration #epilepsyawareness #kilimanjaro #fundraiser #motivationalspeaker #australianstory</p>
+  </div>
+</div>
+
+<!-- ========== 视频 5 ========== -->
+<div class="video-card">
+  <div class="video-header"><div class="vnum">5</div><div><div class="vtitle">你的想法成为现实</div><div class="vsub">心态篇 · 25 秒 · YouTube Shorts 【V2微调】</div></div></div>
+  <div class="v-meta"><span class="tag p">心态</span><span class="tag r">焦虑话题</span><span class="tag g">行动指引</span></div>
+  <div class="hook">🎬 钩子（0-3s）："最难攀登的山不在非洲。在你自己脑子里。"</div>
+  <p><strong>主体（3-20s）：</strong>"Colin Furphy 说：攀登最难的障碍是你心里的那道墙，和你对自己的不信任。医生说不能爬山，他问自己：'这是真的吗？还是别人告诉我我不能？'你能做你想做的事。相信你自己，放下骄傲去求助。"</p>
+  <div class="cta">🎯 CTA（20-25s）："改变想法，改变现实。关注 Colin。"</div>
+  <div class="pub-box">
+    <h5>发布配置</h5>
+    <p><strong>标题：</strong>The hardest mountain isn't Kilimanjaro. It's the one in your mind. 🧠⛰️</p>
+  </div>
+</div>
+
+
+<!-- ========== 视频 6 (NEW!) ========== -->
+<div class="video-card" id="v6" style="border-color:#ff9500;border-width:2px;">
+  <div class="video-header">
+    <div class="vnum new">6 🆕</div>
+    <div>
+      <div class="vtitle">凌晨2点，他撞穿了混凝土墙</div>
+      <div class="vsub">高燃叙事 · 45 秒 · YouTube Shorts + Facebook 【V2 全新】</div>
+    </div>
+  </div>
+  <div class="v-meta">
+    <span class="tag r">最强钩子</span>
+    <span class="tag o">物理冲击</span>
+    <span class="tag g">人性温度</span>
+    <span class="tag p">病毒潜力</span>
+  </div>
+  <p style="background:#fff8e1;padding:10px;border-radius:6px;margin:10px 0;font-size:14px;">
+    <strong>💡 为什么这条视频可能爆：</strong>"撞穿混凝土墙"是一个极具画面感和物理冲击力的细节，远比抽象的"战胜疾病"更能抓住注意力。加上同事驱车2小时陪护的人性化结尾，形成完整的情感弧线（恐惧→震撼→温暖）。
+  </p>
+
+  <h4>脚本</h4>
+  <div class="hook">🎬 钩子（0-4s）："凌晨两点。一个人。一座矿山。然后他撞穿了墙壁。"</div>
+  <p><strong>主体（4-36s）：</strong>"Colin Furphy 独自在昆士兰矿区上夜班。大约凌晨两点，他发生了有生以来最大的一次癫痫发作。猛烈到什么程度？他撞穿了旁边混凝土墙壁的一个洞。奇迹是没有头部受伤。更感人的是后面 — 他的同事们下了班之后，专门开车两个小时去医院陪他，确保他有人陪伴、有人照看。Colin 说：这真的非常感人，对康复帮助很大。后来他经历了第二次脑部手术，减掉 46 公斤，登上了乞力马扎罗。但那个深夜的混凝土墙，是他故事里最硬的一章。"</p>
+  <div class="cta">🎯 CTA（36-45s）："你最硬的那一章是什么？评论区告诉我。关注 Colin Furphy。"</div>
+
+  <h4>分镜表</h4>
+  <table class="scene-table">
+    <thead><tr><th>时间</th><th>画面</th><th>字幕</th><th>音效/BGM</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="stime">0-4s</td>
+        <td>全黑屏幕 → 时钟跳动"2:00 AM"红色闪烁 → 一束矿灯打在黑暗隧道墙上</td>
+        <td class="stxt">2 AM. Alone. Underground. Then he smashed through a wall.</td>
+        <td>钟表滴答 → 突然一声巨大撞击音效（类似金属砸水泥）</td>
+      </tr>
+      <tr>
+        <td class="stime">4-12s</td>
+        <td>快速闪切：矿工头盔灯视角摇晃 → 地面震动特效 → 混凝土裂缝扩散动画 → 黑场</td>
+        <td class="stxt">The biggest seizure he'd ever experienced. Smashed a hole through solid concrete.</td>
+        <td>撞击余音 + 回声 + BGM 低沉弦乐缓慢进入</td>
+      </tr>
+      <tr>
+        <td class="stime">12-20s</td>
+        <td>救护车灯光（远处）→ 医院走廊 → Colin 躺在病床上 → 两双手握着他的手（同事）</td>
+        <td class="stxt">Air-lifted to hospital. No head injuries — miraculously. Then his coworkers arrived.</td>
+        <td>救护车远警笛 → BGM 转 温暖钢琴</td>
+      </tr>
+      <tr>
+        <td class="stime">20-28s</td>
+        <td>夜晚高速公路车灯（车内视角）→ 字幕"They drove TWO HOURS after their shift"</td>
+        <td class="stxt">They finished their shift, then drove two hours just to keep him company.</td>
+        <td>温柔吉他 BGM</td>
+      </tr>
+      <tr>
+        <td class="stime">28-36s</td>
+        <td>Colin 康复后微笑（演讲画面）→ 快速闪回：训练→减重→登山→山顶</td>
+        <td class="stxt">"It really touched me and helped with the recovery." Later: 46kg lost. Kilimanjaro summit.</td>
+        <td>BGM 渐强至史诗</td>
+      </tr>
+      <tr>
+        <td class="stime">36-45s</td>
+        <td>Colin 直视镜头 → 屏幕下方评论框动画"What's YOUR hardest chapter?"</td>
+        <td class="stxt">What's your hardest chapter? Comment below. Follow Colin Furphy.</td>
+        <td>BGM 收尾</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pub-box">
+    <h5>发布配置</h5>
+    <p><strong>标题：</strong>He smashed through a CONCRETE WALL at 2am. What happened next will restore your faith in humanity. 😭💪</p>
+    <p><strong>备选标题A：</strong>This seizure was so powerful he broke through a concrete wall. The aftermath made him cry.</p>
+    <p><strong>备选标题B：</strong>2AM. Alone in a mine. His coworkers drove 2 hours to save him. This is humanity. ❤️</p>
+    <p><strong>标签：</strong>#colinfurphy #epilepsyawareness #humanity #mining #storytime #tearjerker #inspiration #australia #workmates #nevergiveup #viral</p>
+    <p><strong>封面文案：</strong>SMASHED THROUGH CONCRETE. WHAT HAPPENED NEXT →</p>
+    <p><strong>封面画面：</strong>深色矿洞背景，一道明显的裂缝/破洞在混凝土墙中央，一束光从裂缝透进来</p>
+  </div>
+</div>
+
+
+<!-- ========== 视频 7 (NEW!) ========== -->
+<div class="video-card" id="v7" style="border-color:#af52de;border-width:2px;">
+  <div class="video-header">
+    <div class="vnum new">7 🆕</div>
+    <div>
+      <div class="vtitle">一张纸改变了他的命运</div>
+      <div class="vsub">实用方法 · 35 秒 · YouTube Shorts 【V2 全新】</div>
+    </div>
+  </div>
+  <div class="v-meta">
+    <span class="tag p">实用</span>
+    <span class="tag g">可复制</span>
+    <span class="tag">收藏驱动</span>
+    <span class="tag o">高互动</span>
+  </div>
+  <p style="background:#f3e8ff;padding:10px;border-radius:6px;margin:10px 0;font-size:14px;">
+    <strong>💡 定位：</strong>这条走"干货/方法论"路线，目标是让用户觉得"我可以立刻学着做"从而触发收藏和转发。Goal Chart 是普通人最容易模仿的工具。
+  </p>
+
+  <h4>脚本</h4>
+  <div class="hook">🎬 钩子（0-3s）："他用一张纸列出了 5 个目标。然后全部实现了。"</div>
+  <p><strong>主体（3-28s）：</strong>"Colin Furphy 第二次脑部手术后搬到 Alice Springs，做了一件事 — 他写了一张目标清单。上面写着：停药。环游世界。交朋友。减重 46 公斤。爬乞力马扎罗。他不是一口气做完的，而是一个一个来。每完成一项就划掉一项，按自己的节奏。结果呢？全部做到了。最后一条的实现日期：2012 年 2 月 29 日。"</p>
+  <div class="cta">🎯 CTA（28-35s）："现在拿出手机，写下你的第一个目标。不需要完美，只需要开始。关注 Colin Furphy 学更多。"</div>
+
+  <h4>分镜表</h4>
+  <table class="scene-table">
+    <thead><tr><th>时间</th><th>画面</th><th>字幕</th><th>音效/BGM</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="stime">0-3s</td>
+        <td>笔记本纸张特写 → 手写字逐行浮现：① Stop meds ② Travel ③ Friends ④ Lose 46kg ⑤ Climb Kili</td>
+        <td class="stxt">He wrote down 5 goals. Then achieved every single one.</td>
+        <td>笔尖书写沙沙声 + 轻快节拍</td>
+      </tr>
+      <tr>
+        <td class="stime">3-12s</td>
+        <td>Colin 在 Alice Springs 户外（日落剪影照）→ "GOAL CHART"标题卡</td>
+        <td class="stxt">After his second brain surgery, Colin moved to Alice Springs and made a Goal Chart.</td>
+        <td>温暖民谣风 BGM 进入</td>
+      </tr>
+      <tr>
+        <td class="stime">12-22s</td>
+        <td>动画：5个目标圆圈逐一被勾选 ✓ → 每个✓配对应实拍画面（跑步/护照/朋友聚会/称重/登山装备）</td>
+        <td class="stxt">Not all at once. One by one. At his own pace. Stop meds ✓ Travel ✓ Friends ✓ Lose 46kg ✓</td>
+        <td>每次勾选一声清脆"叮"</td>
+      </tr>
+      <tr>
+        <td class="stime">22-28s</td>
+        <td>最后一个圆圈"Climb Kilimanjaro"被勾选 → 变成 Uhuru Peak 照片 → 日期戳"2012.02.29"</td>
+        <td class="stxt">Last one checked: February 29, 2012. Summit achieved.</td>
+        <td>BGM 高潮</td>
+      </tr>
+      <tr>
+        <td class="stime">28-35s</td>
+        <td>空白笔记本纸 → 光标闪烁提示书写 → "WRITE YOUR FIRST GOAL"</td>
+        <td class="stxt">Take out your phone. Write your first goal. It doesn't need to be perfect. Just start.</td>
+        <td>BGM 收尾</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pub-box">
+    <h5>发布配置</h5>
+    <p><strong>标题：</strong>The Goal Chart method that took him from brain surgery to Mount Kilimanjaro. 📝🏔️ Save this one.</p>
+    <p><strong>备选标题：</strong>5 goals on one piece of paper. All achieved. Here's his system. 📋</p>
+    <p><strong>标签：</strong>#goalsetting #productivity #goals #colinfurphy #motivation #selfimprovement #shorts #lifehack #planning</p>
+    <p><strong>封面文案：</strong>5 Goals. 1 Paper. Done. ✅</p>
+    <p><strong>封面画面：</strong>一张手写目标清单的照片风格（可模拟制作），上面有5个项目，前面4个打了✓，第5个正在被打勾</p>
+  </div>
+</div>
+
+
+<!-- ====== 七、发布执行 ====== -->
+<h2 id="publish">七、发布执行方案</h2>
+
+<h3>素材获取优先级</h3>
+<table>
+  <thead><tr><th>优先级</th><th>素材</th><th>来源</th><th>行动</th></tr></thead>
+  <tbody>
+    <tr><td>P0 最高</td><td>Uhuru Peak 团队合影</td><td>Epilepsy Qld 杂志 IMG_0052.png</td><td>联系 EQ 获取高清原图</td></tr>
+    <tr><td>P0 最高</td><td>手术疤痕照片</td><td>杂志 IMG_0052/53</td><td>同上</td></tr>
+    <tr><td>P0 最高</td><td>少年 Colin 照片</td><td>杂志 IMG_0052.png</td><td>同上</td></tr>
+    <tr><td>P1 高</td><td>源视频片段</td><td>YouTube 原视频</td><td>yt-dlp 下载视频后剪辑</td></tr>
+    <tr><td>P1 高</td><td>雪山/日落剪影</td><td>杂志 IMG_0053.png</td><td>同 P0</td></tr>
+    <tr><td>P2 中</td><td>矿洞/混凝土墙场景</td><td>无现成素材</td><td>用公版素材 或 AI 生成分镜画面</td></tr>
+    <tr><td>P2 中</td><td>Alice Springs 场景</td><td>无现成素材</td><td>公版素材 或 AI 生成</td></tr>
+    <tr><td>P3 辅助</td><td>药瓶/笔记等道具</td><td>自行准备拍摄</td><td>实物拍摄或 AI 生成</td></tr>
+  </tbody>
+</table>
+
+<h3>通用发布要素</h3>
+<p>• <strong>账号统一简介：</strong>Colin Furphy — Motivational Speaker | Kilimanjaro Climber (5,895m) | Double Brain Surgery Survivor | Raised $32K for Kids | If you can get through epilepsy, you can get through anything</p>
+<p>• <strong>置顶评论话术：</strong>"What's the mountain you're climbing right now? 👇 Drop it below."</p>
+<p>• <strong>跨平台导流链路：</strong>YT Shorts → "Full story & photos on Facebook"；FB → "Follow on YouTube for daily motivation"</p>
+<p>• <strong>Hashtag 组合策略：</strong>每条必带 #colinfurphy（建立品牌词）；根据内容切换 #epilepsyawareness / #motivation / #goalsetting / #mining / #kilimanjaro</p>
+<p>• <strong>数据复盘节点：</strong>视频 6 发布 24h 后看完播率和评论数，低于 45% 完播率则缩短钩子到 2s</p>
+
+<h3>下一步可选动作</h3>
+<div class="highlight-box">
+  <p><strong>Option A — 我帮你做：</strong>选择任意一条或多条视频，我对分镜画面描述调用 AI 视频生成工具（Runway/Seedance）生成素材片段。</p>
+  <p style="margin-top:8px"><strong>Option B — 你自己做：</strong>下载源视频 + 联系 Epilepsy Queensland 要高清照片，按分镜表剪辑即可。</p>
+  <p style="margin-top:8px"><strong>Option C — 混合模式：</strong>我用 AI 生成缺少数材（矿洞、Alice Springs 等），你负责真人素材部分，最终合成。</p>
+</div>
+
+<div class="footer">
+  Colin FurPHY 推广视频策划方案 V2 · 基于 YouTube 源视频 + Epilepsy Queensland Magazine Issue 2/2018 · 2026-06-23<br>
+  数据来源交叉验证 · 姓名更正 Fury → Furphy · 新增 2 条原创视频脚本
+</div>
+
+</div>
+</body>
+</html>
